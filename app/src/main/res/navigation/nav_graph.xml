@@ -18,14 +18,22 @@
         android:id="@+id/gameFragment"
         android:name="androidsamples.java.tictactoe.GameFragment"
         android:label="@string/game_fragment_label"
-        tools:layout="@layout/fragment_game"/>
+        tools:layout="@layout/fragment_game">
+        <argument
+            android:name="gameType"
+            app:argType="integer" />
+    </fragment>
     <fragment
         android:id="@+id/dashboardFragment"
         android:name="androidsamples.java.tictactoe.DashboardFragment"
         android:label="fragment_item_list"
-        tools:layout="@layout/fragment_dashboard" >
+        tools:layout="@layout/fragment_dashboard">
         <action
             android:id="@+id/action_need_auth"
             app:destination="@id/loginFragment" />
+        <action
+            android:id="@+id/action_game"
+            app:destination="@id/gameFragment"
+            app:enterAnim="@anim/fragment_open_enter" />
     </fragment>
 </navigation>

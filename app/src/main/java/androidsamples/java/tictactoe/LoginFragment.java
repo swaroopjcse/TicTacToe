@@ -28,8 +28,5 @@ public class LoginFragment extends Fragment {
                     NavDirections action = LoginFragmentDirections.actionLoginSuccessful();
                     Navigation.findNavController(v).navigate(action);
                 });
-//                .setOnClickListener(v -> NavHostFragment
-//                        .findNavController(LoginFragment.this)
-//                        .navigate(R.id.action_loginFragment_to_dashboardFragment));
     }
 }

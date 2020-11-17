@@ -1,5 +1,6 @@
 package androidsamples.java.tictactoe;
 
+import android.app.AlertDialog;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -9,12 +10,9 @@ import android.view.ViewGroup;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavDirections;
 import androidx.navigation.Navigation;
-import androidx.navigation.fragment.NavHostFragment;
 
 public class DashboardFragment extends Fragment {
 
-    // TODO: Customize parameter argument names
-    private static final String ARG_COLUMN_COUNT = "column-count";
     private static final String TAG = "DashboardFragment";
 
     /**
@@ -24,25 +22,13 @@ public class DashboardFragment extends Fragment {
     public DashboardFragment() {
     }
 
-    public static DashboardFragment newInstance(int columnCount) {
-        DashboardFragment fragment = new DashboardFragment();
-        Bundle args = new Bundle();
-        args.putInt(ARG_COLUMN_COUNT, columnCount);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Log.d(TAG, "onCreate");
 
-        if (getArguments() != null) {
-            // TODO extract arguments, if any
-        }
-
         // TODO toggle this value to navigate to the LoginFragment
-        boolean needAuth = false; //true;
+        boolean needAuth = false;
         // Todo You should check if a user is logged in, otherwise show LoginFragment
         if (needAuth) {
             Log.d(TAG, "Authentication needed; navigating to LoginFragment");
@@ -57,6 +43,24 @@ public class DashboardFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_dashboard, container, false);
 
+        view.findViewById(R.id.fab_new_game).setOnClickListener(v -> {
+            AlertDialog dialog = new AlertDialog.Builder(requireActivity())
+                    .setTitle(getString(R.string.new_game))
+                    .setMessage("Which type of game do you want to create?")
+                    .setPositiveButton("Two-Player", (d, which) -> {
+                        Log.d(TAG, "New Two-Player Game");
+                        NavDirections action = DashboardFragmentDirections.actionGame(GameFragment.TWO_PLAYER_GAME);
+                        Navigation.findNavController(v).navigate(action);
+                    })
+                    .setNegativeButton("One-Player", (d, which) -> {
+                        Log.d(TAG, "New One-Player Game");
+                        NavDirections action = DashboardFragmentDirections.actionGame(GameFragment.ONE_PLAYER_GAME);
+                        Navigation.findNavController(v).navigate(action);
+                    })
+                    .setNeutralButton("Cancel", (d, which) -> d.dismiss())
+                    .create();
+            dialog.show();
+        });
         return view;
     }
 }
