@@ -1,19 +1,21 @@
 package androidsamples.java.tictactoe;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavDirections;
+import androidx.navigation.Navigation;
+import androidx.navigation.fragment.NavHostFragment;
 
-/**
- * A fragment representing a list of Items.
- */
 public class DashboardFragment extends Fragment {
 
     // TODO: Customize parameter argument names
     private static final String ARG_COLUMN_COUNT = "column-count";
+    private static final String TAG = "DashboardFragment";
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -33,9 +35,20 @@ public class DashboardFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Log.d(TAG, "onCreate");
 
         if (getArguments() != null) {
             // TODO extract arguments, if any
+        }
+
+        // TODO toggle this value to navigate to the LoginFragment
+        boolean needAuth = false; //true;
+        // Todo You should check if a user is logged in, otherwise show LoginFragment
+        if (needAuth) {
+            Log.d(TAG, "Authentication needed; navigating to LoginFragment");
+            NavDirections action = DashboardFragmentDirections.actionNeedAuth();
+            Navigation.findNavController(getActivity(), R.id.nav_host_fragment)
+                    .navigate(action);
         }
     }
 

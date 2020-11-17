@@ -7,15 +7,15 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.navigation.fragment.NavHostFragment;
+import androidx.navigation.NavDirections;
+import androidx.navigation.Navigation;
 
 public class LoginFragment extends Fragment {
 
     @Override
     public View onCreateView(
             LayoutInflater inflater, ViewGroup container,
-            Bundle savedInstanceState
-    ) {
+            Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_login, container, false);
     }
@@ -24,8 +24,12 @@ public class LoginFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         view.findViewById(R.id.btn_log_in)
-                .setOnClickListener(v -> NavHostFragment
-                        .findNavController(LoginFragment.this)
-                        .navigate(R.id.action_loginFragment_to_dashboardFragment));
+                .setOnClickListener(v -> {
+                    NavDirections action = LoginFragmentDirections.actionLoginSuccessful();
+                    Navigation.findNavController(v).navigate(action);
+                });
+//                .setOnClickListener(v -> NavHostFragment
+//                        .findNavController(LoginFragment.this)
+//                        .navigate(R.id.action_loginFragment_to_dashboardFragment));
     }
 }

@@ -11,7 +11,7 @@
         android:label="@string/login_fragment_label"
         tools:layout="@layout/fragment_login">
         <action
-            android:id="@+id/action_loginFragment_to_dashboardFragment"
+            android:id="@+id/action_login_successful"
             app:destination="@id/dashboardFragment" />
     </fragment>
     <fragment
@@ -25,7 +25,7 @@
         android:label="fragment_item_list"
         tools:layout="@layout/fragment_dashboard" >
         <action
-            android:id="@+id/action_dashboardFragment_to_loginFragment"
+            android:id="@+id/action_need_auth"
             app:destination="@id/loginFragment" />
     </fragment>
 </navigation>
