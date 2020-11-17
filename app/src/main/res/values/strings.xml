@@ -1,14 +1,17 @@
 <resources>
     <string name="app_name">Tic Tac Toe</string>
-    <string name="logout">Log Out</string>
-    <!-- Strings used for fragments for navigation -->
+    <string name="placeholder">Placeholder</string>
+
     <string name="login_fragment_label">Login Fragment</string>
     <string name="game_fragment_label">Game Fragment</string>
-    <string name="login">Register or Log In</string>
-    <string name="previous">Previous</string>
+    <string name="dashboard_fragment_label">Dashboard Fragment</string>
 
-    <string name="placeholder">Placeholder</string>
+    <string name="login">Register or Log In</string>
+    <string name="logout">Log Out</string>
+
     <string name="new_game">New Game</string>
     <string name="email">Email</string>
     <string name="password">Password</string>
+
+    <string name="blank"> </string>
 </resources>
