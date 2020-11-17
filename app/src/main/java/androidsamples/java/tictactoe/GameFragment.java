@@ -27,12 +27,13 @@ public class GameFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setHasOptionsMenu(true);
+        setHasOptionsMenu(true); // Needed to display the action menu for this fragment
 
+        // Extract the argument passed with the action in a type-safe way
         GameFragmentArgs args = GameFragmentArgs.fromBundle(getArguments());
         Log.d(TAG, "New game type = " + args.getGameType());
 
-        // Handles the back press by adding a confirmation to forfeit the game
+        // Handle the back press by adding a confirmation dialog
         OnBackPressedCallback callback = new OnBackPressedCallback(true) {
             @Override
             public void handleOnBackPressed() {
@@ -40,13 +41,13 @@ public class GameFragment extends Fragment {
 
                 // TODO show dialog only when the game is still in progress
                 AlertDialog dialog = new AlertDialog.Builder(requireActivity())
-                        .setTitle("Confirm")
-                        .setMessage("Are you sure you want to forfeit this game?")
-                        .setPositiveButton("Yes", (d, which) -> {
+                        .setTitle(R.string.confirm)
+                        .setMessage(R.string.forfeit_game_dialog_message)
+                        .setPositiveButton(R.string.yes, (d, which) -> {
                             // TODO update loss count
                             mNavController.popBackStack();
                         })
-                        .setNegativeButton("Cancel", (d, which) -> d.dismiss())
+                        .setNegativeButton(R.string.cancel, (d, which) -> d.dismiss())
                         .create();
                 dialog.show();
             }
@@ -91,6 +92,7 @@ public class GameFragment extends Fragment {
     @Override
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
-        inflater.inflate(R.menu.menu_main, menu);
+        inflater.inflate(R.menu.menu_logout, menu);
+        // this action menu is handled in MainActivity
     }
 }

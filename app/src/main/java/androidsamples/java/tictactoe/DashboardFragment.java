@@ -1,6 +1,7 @@
 package androidsamples.java.tictactoe;
 
 import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -33,11 +34,12 @@ public class DashboardFragment extends Fragment {
         super.onCreate(savedInstanceState);
         Log.d(TAG, "onCreate");
 
-        setHasOptionsMenu(true);
+        setHasOptionsMenu(true); // Needed to display the action menu for this fragment
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(LayoutInflater inflater,
+                             ViewGroup container,
                              Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_dashboard, container, false);
     }
@@ -51,20 +53,30 @@ public class DashboardFragment extends Fragment {
 
         // Show a dialog when the user clicks the "new game" button
         view.findViewById(R.id.fab_new_game).setOnClickListener(v -> {
+
+            // A listener for the positive and negative buttons of the dialog
+            DialogInterface.OnClickListener listener = (dialog, which) -> {
+                String gameType = "No type";
+                if (which == DialogInterface.BUTTON_POSITIVE) {
+                    gameType = getString(R.string.two_player);
+                } else if (which == DialogInterface.BUTTON_NEGATIVE) {
+                    gameType = getString(R.string.one_player);
+                }
+                Log.d(TAG, "New Game: " + gameType);
+
+                // Passing the game type as a parameter to the action
+                // extract it in GameFragment in a type safe way
+                NavDirections action = DashboardFragmentDirections.actionGame(gameType);
+                mNavController.navigate(action);
+            };
+
+            // create the dialog
             AlertDialog dialog = new AlertDialog.Builder(requireActivity())
-                    .setTitle(getString(R.string.new_game))
+                    .setTitle(R.string.new_game)
                     .setMessage(R.string.new_game_dialog_message)
-                    .setPositiveButton(R.string.two_player, (d, which) -> {
-                        Log.d(TAG, "New Game: " + getString(R.string.two_player));
-                        NavDirections action = DashboardFragmentDirections.actionGame(getString(R.string.two_player));
-                        mNavController.navigate(action);
-                    })
-                    .setNegativeButton(R.string.one_player, (d, which) -> {
-                        Log.d(TAG, "New Game: " + getString(R.string.one_player));
-                        NavDirections action = DashboardFragmentDirections.actionGame(getString(R.string.one_player));
-                        mNavController.navigate(action);
-                    })
-                    .setNeutralButton("Cancel", (d, which) -> d.dismiss())
+                    .setPositiveButton(R.string.two_player, listener)
+                    .setNegativeButton(R.string.one_player, listener)
+                    .setNeutralButton(R.string.cancel, (d, which) -> d.dismiss())
                     .create();
             dialog.show();
         });
@@ -73,6 +85,7 @@ public class DashboardFragment extends Fragment {
     @Override
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
-        inflater.inflate(R.menu.menu_main, menu);
+        inflater.inflate(R.menu.menu_logout, menu);
+        // this action menu is handled in MainActivity
     }
 }
