@@ -4,6 +4,8 @@ import android.app.AlertDialog;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -16,9 +18,6 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
 public class GameFragment extends Fragment {
-    public static final int ONE_PLAYER_GAME = 1;
-    public static final int TWO_PLAYER_GAME = 2;
-
     private static final String TAG = "GameFragment";
     private static final int GRID_SIZE = 9;
 
@@ -28,6 +27,7 @@ public class GameFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
 
         GameFragmentArgs args = GameFragmentArgs.fromBundle(getArguments());
         Log.d(TAG, "New game type = " + args.getGameType());
@@ -86,5 +86,11 @@ public class GameFragment extends Fragment {
                 // TODO implement listeners
             });
         }
+    }
+
+    @Override
+    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        inflater.inflate(R.menu.menu_main, menu);
     }
 }

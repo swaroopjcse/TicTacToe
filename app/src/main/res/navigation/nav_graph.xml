@@ -21,12 +21,12 @@
         tools:layout="@layout/fragment_game">
         <argument
             android:name="gameType"
-            app:argType="integer" />
+            app:argType="string" />
     </fragment>
     <fragment
         android:id="@+id/dashboardFragment"
         android:name="androidsamples.java.tictactoe.DashboardFragment"
-        android:label="fragment_item_list"
+        android:label="@string/app_name"
         tools:layout="@layout/fragment_dashboard">
         <action
             android:id="@+id/action_need_auth"
